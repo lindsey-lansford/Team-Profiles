@@ -1,135 +1,84 @@
-//file that builds the html team profile
-const generateHTML = require('./src/generateHTML.js');
+//file that builds the html team profiles
+const generateHTML = require('./src/generateHTML');
 
-//node modules
+//team prompts
+const { managerPrompts, engineerPrompts, internPrompts } = require('./lib/prompts');
+
+//modules needed for app
 const fs = require('fs');
 const inquirer = require('inquirer');
 
-//team classes
+//team sub classes
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
-//team array-->coming from user input
+//holds the user input to build the html file
 const teamArray = [];
 
-//manager prompts & add function
-const addManager = () => {
-    inquirer
-    .prompt([
-        {
-            type: 'input',
-            name: 'name',
-            message: "Please enter the name of the team manager.",
-        },
-        {
-            type: 'input',
-            name: 'id',
-            message: "Please enter the ID of the team manager.",
-        },
-        {
-            type: 'input',
-            name: 'email',
-            message: "Please enter the email address of the team manager.",
-        },
-        {
-            type: 'input',
-            name: 'officeNumber',
-            message: "Please enter the office phone number of the team manager.",
-        },
-    ])
-    .then(managerInput => {
-        const { name, id, email, officeNumber } = managerInput;
-        const manager = new Manager(name, id, email, officeNumber);
-        
-        teamArray.push(manager);
-        // console.log(manager);
-        addEmployee();
-    })
-}
-
-
-//employee prompts & add function
-const addEmployee = () => {
-    console.log(`
-        ================================
-        Adding employees to the team-->
-        ================================
-    `);
-    inquirer
-        .prompt([
-        {
-            type: 'list',
-            name: 'role',
-            message: "Please select one of the following roles for your new employee.",
-            choices: ['Engineer', 'Intern'],
-        },
-        {
-            type: 'input',
-            name: 'name',
-            message: "Please enter the employee's name.",
-        },
-        {
-            type: 'input',
-            name: 'id',
-            message: "Please enter the employee's ID number.",
-        },
-        {
-            type: 'input',
-            name: 'email',
-            message: "Please enter the employee's email address.",
-        },
-        {
-            type: 'input',
-            name: 'github',
-            message: "Please enter the employee's GitHub username.",
-            when: (input) => input.role === 'Engineer',
-        },
-        {
-            type: 'input',
-            name: 'school',
-            message: "Please enter the school's name that the Intern attended.",
-            when: (input) => input.role === 'Intern',
-        },
-        {
-            type: 'confirm',
-            name: 'confirmAddMore',
-            message: "Would you like to add more employees to your team?",
-            default: false,
-        },
-    ])
-        .then(employeeInput => {
-            let { role, name, id, email, github, school, confirmAddMore } = employeeInput;
-            // console.log(employeeInput)
-            let employee;
+//function that initiates the build/manager prompts and sends the manager input into the teamArray, and then initiates the addEmployee function/prompts
+const initTeamBuild = () => {
+    inquirer.prompt(managerPrompts)
+        .then(({name, id, email, officeNumber}) => {
+            // const { name, id, email, officeNumber } = managerInput;
+            const manager = new Manager(name, id, email, officeNumber);
+                // console.log(manager);
+            teamArray.push(manager);
             
-            if (role === 'Engineer') {
-                employee = new Engineer(name, id, email, github);
-                // console.log(employee);
-
-            } else if (role === 'Intern') {
-                employee = new Intern(name, id, email, school);
-                // console.log(employee);
-            }
-            teamArray.push(employee);
-            
-            if (confirmAddMore) {
-                addEmployee(teamArray);
-            } else {
-                // console.log(teamArray);
-                generateHTML(teamArray);
-            }
-        });
+            addEmployee();
+        })
 };
 
-const writeTeamProfile = data => {
-    fs.writeFile('./examples/index.html', data, (err) => {
-        if (err) {
-            console.log(err)
+//addEmployee function will complete the rest of the prompts and push that user input into the teamArray with an if else statement, or it will generateHTML build.
+const addEmployee = () => {
+    inquirer.prompt({
+        type: 'list',
+        name: 'addMore',
+        message: "Would you like to add more employees to your team?",
+        choices: [
+            { name: 'No, my team is finished.', value: 'finished' },
+            { name: 'Yes, add an engineer.', value: 'engineer' },
+            { name: 'Yes, add an intern.', value: 'intern' },
+        ],
+        default: 'finished'
+    }).then(answers => {
+        if (answers.addMore === 'engineer') {
+            inquirer.prompt(engineerPrompts)
+                .then(engineerInput => {
+                    const { name, id, email, github } = engineerInput;
+                    const engineer = new Engineer(name, id, email, github);
+                    // console.log(engineer)
+                    teamArray.push(engineer);
+                    addEmployee();
+                })
+        } else if (answers.addMore === 'intern') {
+            inquirer.prompt(internPrompts)
+                .then(internInput => {
+                    const { name, id, email, school } = internInput;
+                    const intern = new Intern(name, id, email, school);
+                        // console.log(intern)
+                    teamArray.push(intern);
+                    addEmployee();
+            })
         } else {
-            console.log('success!')
+            console.log('Your team is finished!')
+            let finalOutput = generateHTML(teamArray);
+            // console.log(finalOutput)
+            createHTML(finalOutput);
         }
     })
 };
 
-addManager()
+// Function call to initialize app
+initTeamBuild();
+
+
+const createHTML = (template) => {
+    fs.writeFile('./dist/index.html', template, (err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('Your Team profile was successfully created!');
+        }
+    })
+};
