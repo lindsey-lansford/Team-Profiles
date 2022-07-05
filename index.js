@@ -1,4 +1,4 @@
-//file that builds the html team profiles
+//file that builds the html template with all the user input
 const generateHTML = require('./src/generateHTML');
 
 //team prompts
@@ -13,18 +13,17 @@ const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
-//holds the user input to build the html file
+//holds the user input to build the html template
 const teamArray = [];
 
 //function that initiates the build/manager prompts and sends the manager input into the teamArray, and then initiates the addEmployee function/prompts
 const initTeamBuild = () => {
     inquirer.prompt(managerPrompts)
-        .then(({name, id, email, officeNumber}) => {
-            // const { name, id, email, officeNumber } = managerInput;
+        .then(managerInput => {
+            const { name, id, email, officeNumber } = managerInput;
             const manager = new Manager(name, id, email, officeNumber);
-                // console.log(manager);
+
             teamArray.push(manager);
-            
             addEmployee();
         })
 };
@@ -47,7 +46,7 @@ const addEmployee = () => {
                 .then(engineerInput => {
                     const { name, id, email, github } = engineerInput;
                     const engineer = new Engineer(name, id, email, github);
-                    // console.log(engineer)
+
                     teamArray.push(engineer);
                     addEmployee();
                 })
@@ -56,27 +55,26 @@ const addEmployee = () => {
                 .then(internInput => {
                     const { name, id, email, school } = internInput;
                     const intern = new Intern(name, id, email, school);
-                        // console.log(intern)
+
                     teamArray.push(intern);
                     addEmployee();
             })
         } else {
-            console.log('Your team is finished!')
+            console.log('Thank you! Your team information has been received.');
             let finalOutput = generateHTML(teamArray);
-            // console.log(finalOutput)
             createHTML(finalOutput);
         }
     })
 };
 
-// Function call to initialize app
+//function called to initialize app
 initTeamBuild();
 
-
+//function will take the finalOutput and write the html file.
 const createHTML = (template) => {
-    fs.writeFile('./dist/index.html', template, (err) => {
-        if (err) {
-            console.log(err);
+    fs.writeFile('./dist/template.html', template, (error) => {
+        if (error) {
+            console.log(error);
         } else {
             console.log('Your Team profile was successfully created!');
         }
