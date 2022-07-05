@@ -18,6 +18,7 @@ const generateHTML = (teamArray) => {
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <script src="https://kit.fontawesome.com/64c90fc5f5.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="style.css">
         <title>Team Profile Generator</title>
@@ -29,9 +30,9 @@ const generateHTML = (teamArray) => {
         <main>
             <section id="employee-cards"> ${html.join('')}
             </section>
-</main>
-</body>
-</html>`
+        </main>
+    </body>
+    </html>`
 };
 
 //manager function/string template
@@ -60,9 +61,9 @@ const engineerCard = (name, role, id, email, github) => {
     </div>
     <div class="card-body">
         <ul class="list-group list-group-flush">
-            <li class="list-group-item" id="id">ID: ${id}</li>
-            <li class="list-group-item" id="email">Email: <a href="mailto:${email}">${email}</a></li>
-            <li class="list-group-item" id="github">GitHub: <a href="https://github.com/${github} target="_blank">${github}</a></li>
+            <li class="list-group-item">ID: ${id}</li>
+            <li class="list-group-item">Email: <a href="mailto:${email}">${email}</a></li>
+            <li class="list-group-item">GitHub: <a href="https://github.com/${github}" target="_blank">${github}</a></li>
         </ul>
     </div>
 </div>`
