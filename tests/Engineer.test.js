@@ -7,14 +7,6 @@ describe('Engineer', () => {
         expect(engineer.github).toEqual('emily-smith');
     });
 
-    it('should throw an error if github parameter not provided', () => {
-        const engineer = new Engineer('Emily', 64, 'engineer@test.com', '');
-        // Define the error message that is expected to be thrown
-        const err = new Error("Expected 'github' parameter to be provided");
-        // Verify an error when the entry is not valid
-        expect(engineer.github).toThrow(err);
-    });
-
     it('should return the github value when the getGithub() method is called', () => {
         const engineer = new Engineer('Emily', 64, 'engineer@test.com', 'emily-smith');
         //Verify the github property is returned when the getGithub() method is called

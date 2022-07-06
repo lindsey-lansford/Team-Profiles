@@ -7,13 +7,6 @@ describe('Manager', () => {
         expect(manager.officeNumber).toEqual(123);
     });
 
-    it('should throw an error if provided zero arguments or a non-numeric value', () => {
-        const err = new Error("Expected 'officeNumber' parameter to be provided && Expected a numeric value to be entered")
-        // Verify an error when the entries are not valid
-        expect(() => { new Manager('Lindsey', 789, 'lindsey@test.com', '') }).toThrow(err) &&
-        expect(() => { new Manager('Lindsey', 789, 'lindsey@test.com', 'apple') }).toThrow(err);
-    });
-
     it('should return the office number when the getOfficeNumber() method is called', () => {
         const manager = new Manager('Lindsey', 789, 'lindsey@test.com', 123);
         //Verify the office number property is returned when the getOfficeNumber() method is called

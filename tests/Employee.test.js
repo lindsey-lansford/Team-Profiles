@@ -34,36 +34,6 @@ describe('Employee', () => {
             // Verify that the new object will return 'Employee' when the getRole() method is called
             expect(employee.getRole()).toEqual('Employee');
         });
-
-        it('should throw an error if provided zero arguments', () => {
-            // Wrap the object initialization in a callback function that Jest will run
-            const employee = () => new Employee('Lindsey', '123', 'lindsey@test.com');
-            // Define the error message that is expected to be thrown
-            const err = new Error("Expected parameter 'id' to be a numberic value");
-            // Verify that the correct error was thrown when the callback is executed
-            expect(employee).toThrow(err);
-        });
-
-        it("should throw an error if not provided an id", () => {
-            const employee = () => new Employee('Lindsey', 'lindsey@test.com');
-            const err = new Error("Expected parameter 'id' to be entered");
-
-            expect(employee).toThrow(err);
-        });
-
-        it("should throw an error if 'name' is not a string", () => {
-            const employee = () => new Employee(Lindsey, 25, 'lindsey@test.com');
-            const err = new Error("Expected parameter 'name' to be a string");
-
-            expect(employee).toThrow(err);
-        });
-
-        it("should throw an error if 'email' does not mirror the characters used in an email address", () => {
-            const employee = () => new Employee('Lindsey', 25, 'lindseytest.com');
-            const err = new Error("Expected parameter 'email' to mirror the characters in an email address.");
-
-            expect(employee).toThrow(err);
-        });
     });
     
 });
