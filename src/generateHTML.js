@@ -13,77 +13,104 @@ const generateHTML = (teamArray) => {
             html.push(internCard(teamArray[i].name, 'Intern', teamArray[i].id, teamArray[i].email, teamArray[i].school))
         }
     }
-    return `<!DOCTYPE html>
+    return `
+    <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <script src="https://kit.fontawesome.com/64c90fc5f5.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
         <title>Team Profile Generator</title>
+        <style>
+            *{
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+        </style>
     </head>
+
     <body>
-        <header>
-            <h1 class="title">My Team</h1>
-        </header>
-        <main>
-            <section id="employee-cards"> ${html.join('')}
-            </section>
-        </main>
+        <div class="container-lg">
+            <div class="row g-4 mb-4 justify-content-center align-items-center">
+                <div class="col-md-5 text-center text-md-start">
+                    <h1 class="display-2 text-center">My Team</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-lg">
+            <div class="row row-cols-1 row-cols-md-3 g-4 align-items-center justify-content-center">
+                    ${html.join('')}
+            </div>
+        </div>
     </body>
     </html>`
 };
 
 //manager function/string template
 const managerCard = (name, role, id, email, officeNumber) => {
-    return `<div class="card">
-    <div class="card-header">
-        <h4 class="card-title" id="name">${name}</h4>
-        <h5 class="card-subtitle" id="role">${role}</h5>
-    </div>
-    <div class="card-body">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item" id="id">ID: ${id}</li>
-            <li class="list-group-item" id="email">Email: <a href="mailto:${email}">${email}</a></li>
-            <li class="list-group-item" id="office-number">Office Number: ${officeNumber}</li>
-        </ul>
-    </div>
-</div>`
+    return `
+                <div class="col-8 col-lg-4 col-xl-3">
+                    <div class="card h-100">
+                        <div class="card-header text-center">
+                            <h3 class="card-title">${name}</h3>
+                            <h4 class="lead card-subtitle">${role}</h4>
+                            <i class="bi bi-cup"></i>
+                        </div>
+                        <div class="card-body text-center py-4">
+                            <ul class="list-group">
+                                <li class="list-group-item"><i class="bi bi-fingerprint"></i> <span class="fw-bold">ID: </span>${id}</li>
+                                <li class="list-group-item"><i class="bi bi-envelope"></i> <span class="fw-bold">Email: </span><a href="mailto:${email}">${email}</a></li>
+                                <li class="list-group-item"><i class="bi bi-building"></i> <span class="fw-bold">Office Number: </span>${officeNumber}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>`
 };
 
 //engineer function/string template
 const engineerCard = (name, role, id, email, github) => {
-    return `<div class="card">
-    <div class="card-header">
-        <h4 class="card-title" id="name">${name}</h4>
-        <h5 class="card-subtitle" id="role">${role}</h5>
-    </div>
-    <div class="card-body">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">ID: ${id}</li>
-            <li class="list-group-item">Email: <a href="mailto:${email}">${email}</a></li>
-            <li class="list-group-item">GitHub: <a href="https://github.com/${github}" target="_blank">${github}</a></li>
-        </ul>
-    </div>
-</div>`
+    return `
+                <div class="col-8 col-lg-4 col-xl-3">
+                    <div class="card h-100">
+                        <div class="card-header text-center">
+                            <h3 class="card-title">${name}</h3>
+                            <h4 class="lead card-subtitle">${role}</h4>
+                            <i class="bi bi-gear"></i>
+                        </div>
+                        <div class="card-body text-center py-4">
+                            <ul class="list-group">
+                                <li class="list-group-item"><i class="bi bi-fingerprint"></i> <span class="fw-bold">ID: </span>${id}</li>
+                                <li class="list-group-item"><i class="bi bi-envelope"></i> <span class="fw-bold">Email: </span><a href="mailto:${email}">${email}</a></li>
+                                <li class="list-group-item"><i class="bi bi-github"></i> <span class="fw-bold">GitHub: </span><a href="https://github.com/${github}" target="_blank">${github}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>`
 };
 
 //intern function/string template
 const internCard = (name, role, id, email, school) => {
-    return `<div class="card">
-    <div class="card-header">
-        <h4 class="card-title" id="name">${name}</h4>
-        <h5 class="card-subtitle" id="role">${role}</h5>
-    </div>
-    <div class="card-body">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item" id="id">ID: ${id}</li>
-            <li class="list-group-item" id="email">Email: <a href="mailto:${email}">${email}</a></li>
-            <li class="list-group-item" id="school">School: ${school}</li>
-        </ul>
-    </div>
-</div>`
+    return `
+                <div class="col-8 col-lg-4 col-xl-3">
+                    <div class="card h-100">
+                        <div class="card-header text-center">
+                            <h3 class="card-title">${name}</h3>
+                            <h4 class="lead card-subtitle">${role}</h4>
+                            <i class="bi bi-battery-full"></i>
+                        </div>
+                        <div class="card-body text-center py-4">
+                            <ul class="list-group">
+                                <li class="list-group-item"><i class="bi bi-fingerprint"></i> <span class="fw-bold">ID: </span>${id}</li>
+                                <li class="list-group-item"><i class="bi bi-envelope"></i> <span class="fw-bold">Email: </span><a href="mailto:${email}">${email}</a></li>
+                                <li class="list-group-item"><i class="bi bi-mortarboard"></i> <span class="fw-bold">School: </span>${school}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>`
 };
 
 
