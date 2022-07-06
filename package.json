@@ -1,7 +1,7 @@
 {
   "name": "lindsey_lansford",
   "version": "1.0.0",
-  "description": "A Team Profile Generator",
+  "description": "Generates an HTML file of Team Members and contact info",
   "main": "index.js",
   "directories": {
     "lib": "lib",
@@ -10,7 +10,11 @@
   "scripts": {
     "test": "jest"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lindsey-lansford/Team-Profiles"
+  },
+  "author": "lindsey_lansford",
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^5.2.0-beta1",
