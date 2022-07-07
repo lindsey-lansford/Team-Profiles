@@ -72,7 +72,7 @@ initTeamBuild();
 
 //function will take the finalOutput and write the html file.
 const createHTML = (template) => {
-    fs.writeFile('./dist/template.html', template, (error) => {
+    fs.writeFile('example.html', template, (error) => {
         if (error) {
             console.log(error);
         } else {
