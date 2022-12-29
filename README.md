@@ -15,7 +15,7 @@ This application is built using `Node.js` and `npm inquirer pkg` that takes in i
   - [How to Contribute](#how-to-contribute)
   - [Tests](#tests)
   - [Questions](#questions)
-    - [Walkthrough Demonstration](#walkthrough-demonstration)
+  - [Walkthrough Demonstration](#walkthrough-demonstration)
   - [Mockup](#mockup)
 
 ## Installation
